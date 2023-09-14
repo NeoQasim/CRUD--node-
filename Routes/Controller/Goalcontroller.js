@@ -5,8 +5,7 @@ const getGoals = (req, res) => {
 
 const postGoals = (req, res) => {
     const task = req.body.mytask
-    console.log(task);
-    res.send("data send ")
+    res.send(task)
 }
 
 const updateGoals = (req, res) => {
