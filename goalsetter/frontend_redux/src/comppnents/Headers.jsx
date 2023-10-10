@@ -22,6 +22,9 @@ function Headers() {
                             <Nav.Link className=" link">
                                 <Link to="/show"><h1>Show</h1></Link>
                             </Nav.Link>
+                            <Nav.Link className=" link">
+                                <Link to="/register"><h1>Regsiter</h1></Link>
+                            </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
