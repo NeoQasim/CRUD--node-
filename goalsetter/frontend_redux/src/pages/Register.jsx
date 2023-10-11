@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../features/auth/authslice";
-
+import { useNavigate } from "react-router-dom";
 const Register = () => {
 
     const [formfields, setformfields] = useState({
@@ -10,22 +10,33 @@ const Register = () => {
     })
 
     const { name, email, password } = formfields
+    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth);
 
-    // eslint-disable-next-line no-use-before-define
-    // get the states from redux
     const dispatch = useDispatch()
-    const { user, isLoading, isError, isSuccess, message } = useSelector(state => state.auth)
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (isSuccess || user) {
+            navigate("/add-goals")
+        } else {
+            console.log(message);
+            navigate("/register")
+        }
+
+
+    }, [isSuccess])
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         if (isError) {
             console.log(message);
+        } else {
+            const newuserData = { name, email, password };
+            await dispatch(registerUser(newuserData)); // Wait for the async action to complete
+            // Handle success or error here based on the updated state
         }
-        else {
-            const newuserData = { name, email, password }
-
-            dispatch(registerUser(newuserData))
-        }
-    }
+    };
     const handleChange = (e) => {
         e.preventDefault()
         setformfields((prevValue) => ({

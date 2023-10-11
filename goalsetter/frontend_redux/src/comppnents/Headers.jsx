@@ -1,11 +1,21 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../pages/styles.css"
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../features/auth/authslice";
 // import NavDropdown from "react-bootstrap/NavDropdown";
 
 function Headers() {
+    const { user } = useSelector((state) => state.auth)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const handleLogout = () => {
+        dispatch(logoutUser())
+        navigate("/register")
+
+    }
     return (
         <>
             <Navbar expand="lg" className="bg-info">
@@ -25,6 +35,17 @@ function Headers() {
                             <Nav.Link className=" link">
                                 <Link to="/register"><h1>Regsiter</h1></Link>
                             </Nav.Link>
+
+                            {user &&
+                                <>
+                                    <Nav.Link className=" link">
+                                        <Link to=""><h1>{user.name}</h1></Link>
+                                    </Nav.Link>
+                                    <Nav.Link className=" ">
+                                        <Link onClick={handleLogout} className="link btn btn-danger" to=""><h4>Logout</h4></Link>
+                                    </Nav.Link>
+                                </>
+                            }
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
