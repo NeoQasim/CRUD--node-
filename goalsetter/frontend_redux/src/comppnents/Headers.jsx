@@ -5,15 +5,21 @@ import { Link, useNavigate } from "react-router-dom";
 import "../pages/styles.css"
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../features/auth/authslice";
+import { useEffect } from "react";
 // import NavDropdown from "react-bootstrap/NavDropdown";
 
 function Headers() {
-    const { user } = useSelector((state) => state.auth)
+    const { user, isSuccess } = useSelector((state) => state.auth)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    useEffect(() => {
+        if (isSuccess) {
+            navigate("/show")
+        }
+    }, [navigate, dispatch, isSuccess])
+
     const handleLogout = () => {
         dispatch(logoutUser())
-        navigate("/register")
 
     }
     return (
