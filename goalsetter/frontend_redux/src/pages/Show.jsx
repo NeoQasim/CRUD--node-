@@ -23,7 +23,7 @@ const Show = () => {
                     return (
                         <>
                             <h6 key={goal._id}>{goal.goal}</h6>
-                            <h6 >{goal.goal}</h6>
+                            <h6 >{goal?.goal}</h6>
                             {/* <h6 >test</h6> */}
                         </>
                     )
